@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            background: url("{% static 'images/login.jpeg' %}") no-repeat;
+            background-size: cover;
+            background-color: #000000A0;/*颜色的后两位是透明度*/
+            font-size: 1.6rem;
+            font-family: arial, 'Times New Roman', Times, serif, "Hiragino Sans GB", "宋体", sans-serif;
+        }
+    </style>
+<!--    <link rel="stylesheet" href="{% static 'bootstrap-3.4.1/css/bootstrap.min.css' %}">-->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.css' %}">
+</head>
+<body>
+    <div id="content">
+        <div class="navbar">
+            <p>Main</p>
+            <p>Our Research</p>
+            <p>Our Team</p>
+        </div>
+        <div class="form">
+            <p id="search_text">Search</p>
+            <input id="search" type="text" placeholder="Search">
+        </div>
+<!--        <ul class="nav nav-pills">-->
+<!--          <li role="presentation" class="active"><a href="#">Home</a></li>-->
+<!--          <li role="presentation"><a href="#">Profile</a></li>-->
+<!--          <li role="presentation"><a href="#">Messages</a></li>-->
+<!--        </ul>-->
+        <div id="guide">
+            <p class="title">Vehicle Routing Optimizer</p>
+            <hr style="color: #FFFFFF"/>
+            <p class="introduction">The Vehicle Routing Optimizer is a web application
+                which allows logistics providers to plan and optimize the navigation routes
+                for a fleet of vehicles needing to transport goods, services or people to
+                multiple locations with time and capacity constraints.This is a brand new
+                product from the Department of Industrial Systems Engineering and Management
+                of the Department of Industrial Systems Engineering and Management of the
+                National University of Singapore that aims to translate some of the best
+                Optimisation and Routing research work into meaningful end products to solve
+                traffic and logistics problems around the world.
+            </p>
+            <p class="tip">Try it now!</p>
+        </div>
+
+        <div id="login-box">
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+            <h1>Login</h1>
+            <hr style="color: #FFFFFF"/>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form">
+                    <div class="item">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <input id="username" type="text" name="username" placeholder="Username">
+                    </div>
+                    <div class="item">
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                        <input id="password" type="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <button type="submit">Log in</button>
+            </form>
+
+            <hr style="color: #FFFFFF"/>
+            <div class="icon">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+</script>

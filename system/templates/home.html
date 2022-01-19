@@ -1,0 +1,704 @@
+{% load static %}
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <style type="text/css">
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #title {
+            width: 100%;
+            height: 45px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            background: -webkit-linear-gradient(left, #050D4B, #575E93);
+            z-index: 0;
+        }
+
+        #title p {
+            margin: 0px;
+            padding-top: 10px;
+            padding-left: 20px;
+            font-size: 18px;
+            color: #DDDDDD;
+        }
+
+        #left #bar {
+            width: 700px;
+            height: 45px;
+            position: absolute;
+            top: 68px;
+            left: 35px;
+            background-color: #9FB0FA;
+            z-index: 3;
+        }
+
+        #select {
+            width: 730px;
+            height: 380px;
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            border-left: #F1F1F3 4px solid;
+            border-right: #F1F1F3 4px solid;
+            border-bottom: #F1F1F3 4px solid;
+            border-top: #F1F1F3 1px solid;
+            border-radius: 3px;
+            z-index: 1;
+        }
+
+        #select .inner1 {
+            position: relative;
+            top: 45px;
+            left: 60px;
+            width: 600px;
+            height: 300px;
+            background-color: #D3DEE5;
+        }
+
+        #select .inner1 .inner2{
+            position: relative;
+            top: 10px;
+            left: 10px;
+            width: 576px;
+            height: 276px;
+            border: 2px #BCC9CE dashed;
+        }
+
+        #select .inner1 .inner2 img{
+            position: relative;
+            top: 50px;
+            left: 240px;
+            width: 90px;
+            height: 90px;
+        }
+
+        #select .inner1 .inner2 p {
+            position: relative;
+            top: 60px;
+            left: 175px;
+            font-size: 16px;
+        }
+
+        #left #bar p {
+            position: relative;
+            margin: 0px 0px;
+            width: 50px;
+            height: 50px;
+            color: #FFFFFF;
+            padding-left: 85px;
+            padding-right: 85px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            left: 35px;
+            top: 10px;
+            display: inline;
+            font-size: 12px;
+        }
+
+        #left #bar p:hover {
+            background-color: #b0c1fb;
+        }
+
+        #left #function {
+            position: absolute;
+            left: 30px;
+            top: 506px;
+        }
+
+        #left #function div{
+            background-color: #6091EF;
+            display: inline;
+            position: relative;
+            padding-left: 13px;
+            padding-right: 13px;
+            padding-top: 8px;
+            padding-bottom: 11px;
+            margin-right: 10px;
+            border-radius: 20px;
+        }
+
+        #left #function div:hover {
+            background-color: #b0c1fb;
+        }
+
+        #left #function div img {
+            position: relative;
+            top: 3px;
+            width: 15px;
+            height: 15px;
+        }
+
+        #left #function div p {
+            margin: 0px 0px;
+            font-size: 12px;
+            display: inline-block;
+            transform:scale(0.9,0.9)
+        }
+
+        #allmap {
+            height: 470px;
+            width: 450px;
+            position: absolute;
+            left: 780px;
+            top: 68px;
+            z-index: 0;
+        }
+
+        #r-result {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .BMap_cpyCtrl {
+            display:none;
+        }
+
+        .anchorBL {
+            display: none;
+        }
+
+        #copyright {
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            top: 554px;
+            left: 0px;
+            background: -webkit-linear-gradient(left, #050D4B, #575E93) ;
+            text-align: center;
+        }
+
+        #copyright p {
+            padding-top: 2px;
+            font-size: 5px;
+            color: #DDDDDD;
+        }
+
+        .BMap_bubble_title {
+            font-size: 15px;
+            font-weight: bold;
+            text-align: left;
+            dy: -6px !important;
+        }
+
+        .BMap_bubble_content div{
+            font-size: 13px !important;
+            text-indent: 0em !important;
+            padding-top: 3px !important;
+            color: #959595 !important;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5jG50mRPAFz2RQKLHf6Me64fZtAddret"></script>
+    <title>home</title>
+</head>
+<body>
+    <div id="title">
+        <p>Vehicle Routing Optimizer v1.0</p>
+    </div>
+    <div id="left">
+        <div id="bar">
+            <p>Orders</p>
+            <p>Depot</p>
+            <p>Vehicles</p>
+        </div>
+        <div id="select">
+            <div class="inner1">
+                <div class="inner2">
+                    <img src="{% static 'images/download.png' %}">
+                    <p>Choose a file or drag it here.</p>
+                </div>
+            </div>
+        </div>
+        <div id="function">
+            <div id="function1">
+                <img src="{% static 'images/upload.png' %}">
+                <p>Load Assignments</p>
+            </div>
+            <div id="function2">
+                <img src="{% static 'images/upload.png' %}">
+                <p>Load NTUC Data</p>
+            </div>
+            <div id="function3">
+                <img src="{% static 'images/add.png' %}">
+                <p>Add Order Point</p>
+            </div>
+            <div id="function4">
+                <img src="{% static 'images/house.png' %}">
+                <p>Add Depots</p>
+            </div>
+            <div id="function5">
+                <img src="{% static 'images/truck.png' %}">
+                <p>Add Vehicles</p>
+            </div>
+        </div>
+    </div>
+    <div id="allmap">
+    </div>
+    <div id="copyright">
+        <p>2021 Copyright: Smart Connected Innovation Competition Group, CSU</p>
+    </div>
+    <!--<div id="r-result">-->
+    <!--    <input type="button" value="获取我的位置" onclick="get_location()"/>-->
+    <!--</div>-->
+</body>
+</html>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(-122.285365, 47.608602), 11.5);
+    map.enableScrollWheelZoom(true);
+    // var navigationControl = new BMap.NavigationControl({
+    //     // 靠左上角位置
+    //     anchor: BMAP_ANCHOR_TOP_LEFT,
+    //     // LARGE类型
+    //     type: BMAP_NAVIGATION_CONTROL_LARGE,
+    //     // 启用显示定位
+    //     enableGeolocation: true
+    // });
+    // map.addControl(navigationControl);
+
+    // function get_location() {
+    //
+    //     var address_latitude ={{ address_latitude |safe}};
+    //     var address_longitude ={{ address_longitude|safe }};
+    //     var address_data ={{ address_data |safe}};
+    //
+    //
+    //     var point = []; //存放标注点经纬信息的数组
+    //     var marker = []; //存放标注点对象的数组
+    //     for (var i = 0; i < address_longitude.length; i++) {
+    //         point[i] = new BMap.Point(address_longitude[i], address_latitude[i]); //循环生成新的地图点
+    //         marker[i] = new BMap.Marker(point[i]); //按照地图点坐标生成标记
+    //         map.addOverlay(marker[i]);
+    //     }
+    //
+    //     for (i = 0; i < marker.length; i++) {
+    //         (function () {
+    //             var index = i;
+    //             marker[index].addEventListener('click', function () {
+    //                 this.openInfoWindow(new BMap.InfoWindow(address_data[index]));
+    //             });
+    //         })();
+    //     }
+    // }
+
+
+    // 设置点击事件
+    document.getElementById("function1").onclick = function() {
+        // 1.设置标记点
+
+        var address_latitude = [47.608602, 47.661075, 47.680838, 47.496631, 47.625277, 47.682122, 47.653736,
+        47.520457, 47.654949, 47.597452, 47.513852, 47.525084, 47.528513, 47.698306, 47.534466, 47.687109,
+        47.602462, 47.575814, 47.574254, 47.513882, 47.664321, 47.659596, 47.626798, 47.531382, 47.627307,
+        47.636613]
+        var address_longitude = [-122.285365, -122.193991, -122.104114, -122.273743, -122.314202, -122.10635,
+        -122.317514, -122.359844, -122.30235, -122.188239, -122.332604, -122.202002, -122.357102, -122.149146,
+        -122.241097, -122.120318, -122.17566, -122.340056, -122.326014, -122.256427, -122.360261, -122.134786,
+        -122.180425, -122.219211, -122.142037, -122.406358]
+        var address_data = ['Depot', 'Droneable Customer',
+        'Droneable Customer', 'Truck-only Customer',
+        'Droneable Customer', 'Droneable Customer',
+        'Droneable Customer', 'Droneable Customer',
+        'Truck-only Customer', 'Droneable Customer',
+        'Droneable Customer', 'Truck-only Customer',
+        'Droneable Customer', 'Droneable Customer',
+        'Droneable Customer', 'Droneable Customer',
+        'Droneable Customer', 'Droneable Customer',
+        'Droneable Customer ', 'Droneable Customer',
+        'Droneable Customer', 'Truck-only Customer',
+        'Droneable Customer', 'Droneable Customer',
+        'Truck-only Customer', 'Droneable Customer',]
+        var type = [0, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1]
+        var weight = [0, 2.0, 2.0, 100.0, 2.0, 4.0, 2.0, 2.0, 100.0, 4.0,
+                      1.0, 100.0, 2.0, 3.0, 5.0, 3.0, 2.0, 2.0, 1.0, 2.0,
+                      2.0, 100.0, 2.0, 5.0, 100.0, 1.0]
+
+        // 存放卡车和无人机路线的数组
+        var truckRouteID = []
+        var uavRouteID1 = []
+        var uavRouteID2 = []
+        var uavRouteID3 = []
+        var uavRouteID4 = []
+        var truckRoute = []
+        var uavRoute1 = []
+        var uavRoute2 = []
+        var uavRoute3 = []
+        var uavRoute4 = []
+
+
+        var point = []; //存放标注点经纬信息的数组
+        var marker = []; //存放标注点对象的数组
+
+        var icon1 = new BMap.Icon("{% static 'images/depot.svg' %}", new BMap.Size(25, 25));
+        var icon2 = new BMap.Icon("{% static 'images/marker1.svg' %}", new BMap.Size(25, 25));
+        var icon3 = new BMap.Icon("{% static 'images/marker2.svg' %}", new BMap.Size(25, 25));
+
+
+        for (var i = 0; i < address_longitude.length; i++) {
+            point[i] = new BMap.Point(address_longitude[i], address_latitude[i]); //循环生成新的地图点
+            if(type[i] == 0)
+                marker[i] = new BMap.Marker(point[i], {icon: icon1}); //按照地图点坐标生成标记
+            else if(type[i] == 1)
+                marker[i] = new BMap.Marker(point[i], {icon: icon2}); //按照地图点坐标生成标记
+            else if(type[i] == 2)
+                marker[i] = new BMap.Marker(point[i], {icon: icon3}); //按照地图点坐标生成标记
+            map.addOverlay(marker[i]);
+        }
+
+        for (i = 0; i < marker.length; i++) {
+            (function () {
+                var index = i;
+                marker[index].addEventListener('click', function () {
+                    let opts = {
+                        width: 200,
+                        height: 70,
+                        title: address_data[index],
+                    }
+                    if(index == 0) {
+                        var content = `<div style="margin:0;line-height:1.5;font-size:12px;text-indent:2em;">`+ ('id:' + index)  + `</div>`
+                        + `<div style="margin:0;line-height:1.5;font-size:12px;text-indent:2em;">`+ ('Weight:' + weight[index])  + `</div>`
+                    }
+                    else {
+                        var content = `<div style="margin:0;line-height:1.5;font-size:12px;text-indent:2em;">`+ ('id:' + index)  + `</div>`
+                        + `<div style="margin:0;line-height:1.5;font-size:12px;text-indent:2em;">`+ ('Weight:' + weight[index])  + `</div>`
+                    }
+                    this.openInfoWindow(new BMap.InfoWindow(content, opts), point[i]);
+                });
+            })();
+        }
+        // var p1 = new BMap.Point(-122.285365, 47.608602);
+        // var p2 = new BMap.Point(-122.193991, 47.661075);
+        // var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+        // driving.search(p1, p2);
+
+        // 2.将左边的导航栏进行更新
+        document.getElementById("select").hidden = true
+        document.getElementById("function").hidden = true
+        var tempDiv = document.createElement('div')
+        tempDiv.id = 'infoTable'
+        tempDiv.style.cssText = 'width: 730px;' +
+                                'height: 452px;' +
+                                'position: absolute;' +
+                                'top: 100px;' +
+                                'left: 20px;' +
+                                'border-left: #F1F1F3 4px solid;' +
+                                'border-right: #F1F1F3 4px solid;' +
+                                'border-bottom: #F1F1F3 0px solid;' +
+                                'border-top: #F1F1F3 1px solid;' +
+                                'border-radius: 3px;' +
+                                'z-index: 1;'
+        tableHtml = '<div style="position: relative; left: 20px; top: 20px; width:700px; height: 432px; overflow: scroll; overflow-x: hidden"><table style="border-collapse: collapse; width: 100%">' +
+                    '<tr style="background-color: #cad5fb; height: 32px; font-size: 12px"><th style="width: 50%; text-align: left; text-indent: 1.5em; position: relative; top: expression(this.offsetParent.scrollTop-2)">AddressType</th><th style="width: 25%; text-align: left; text-indent: 1.5em">ID</th><th style="width: 25%; text-align: left; text-indent: 1.5em">Weight</th></tr>'
+        for (var i = 0; i < marker.length; i++) {
+            if(i % 2 == 0)
+                tableHtml += '<tr style="background-color: #f8f7ff; height: 35px; font-size: 12px"><td style="width: 50%; text-indent: 1.5em">' + address_data[i] + '</td><td style="width: 25%; text-indent: 1.5em">' + (i + 1) + '</td><td style="width: 25%; text-indent: 1.5em">' + weight[i]  + '</td></tr>'
+            else
+                tableHtml += '<tr style="background-color: #edf0fe; height: 35px; font-size: 12px"><td style="width: 50%; text-indent: 1.5em">' + address_data[i] + '</td><td style="width: 25%; text-indent: 1.5em">' + (i + 1) + '</td><td style="width: 25%; text-indent: 1.5em">' + weight[i]  + '</td></tr>'
+        }
+        tableHtml += '</table>'
+        tableHtml += '<div id="button" style="position: relative; left: 5px; top: 15px"><div id="function6" style="background-color: #6091EF;display: inline;position: relative;padding-left: 13px;' +
+                     'padding-right: 13px;padding-top: 8px;padding-bottom: 11px;margin-right: 430px;border-radius: 20px"><img style="position: relative;top: 3px;width: 15px;height: 15px;margin-right: 5px" src="{% static 'images/back.png' %}"><p style="margin: 0px 0px;font-size: 12px;display: inline-block;transform:scale(0.9,0.9)">Go Back</p></div>' +
+                     '<div id="function7" style="background-color: #6091EF;display: inline;position: relative;padding-left: 13px;' +
+                     'padding-right: 13px;padding-top: 8px;padding-bottom: 11px;margin-right: 10px;border-radius: 20px"><img style="position: relative;top: 3px;width: 15px;height: 15px;margin-right: 3px" src="{% static 'images/route.png' %}"><p style="margin: 0px 0px;font-size: 12px;display: inline-block;transform:scale(0.9,0.9)">Route Suggestion</p></div></div>'
+        tableHtml += '</div>'
+        tempDiv.innerHTML = tableHtml
+
+        document.getElementById("left").appendChild(tempDiv)
+
+        allmap = document.getElementById("allmap")
+        allmap.style.cssText = "height: 500px; width: 450px; position: absolute; left: 780px; top: 68px; overflow: scroll; overflow-x: hidden"
+        button6 = document.getElementById("function6")
+        button7 = document.getElementById("function7")
+        button6.onmouseover = function () {
+            this.style.backgroundColor = "#b0c1fb"
+        }
+        button6.onmouseout = function () {
+            this.style.backgroundColor = "#6091EF"
+        }
+        button7.onmouseover = function () {
+            this.style.backgroundColor = "#b0c1fb"
+        }
+        button7.onmouseout = function () {
+            this.style.backgroundColor = "#6091EF"
+        }
+        button6.onclick = function () {
+            document.getElementById("infoTable").remove()
+            map.clearOverlays()
+            document.getElementById("select").hidden = false
+            document.getElementById("function").hidden = false
+        }
+        button7.onclick = function() {
+            document.getElementById("left").hidden = true
+            allmap.style.cssText = "height: 510px; width: 1270px; position: absolute; left: 2px; top: 45px; overflow: scroll; overflow-x: hidden"
+            map = new BMap.Map("allmap");
+            map.centerAndZoom(point[0], 12);
+            map.enableScrollWheelZoom(true);
+            var tempDiv2 = document.createElement('div')
+            tempDiv2.id = 'option'
+            tempDiv2.style.cssText = 'width: 250px;' +
+                                    'height: 260px;' +
+                                    'background-color: #FFFFFF;' +
+                                    'position: absolute;' +
+                                    'top: 45px;' +
+                                    'left: 0px;' +
+                                    'border-left: 0px;' +
+                                    'border-right: #F3F3F3 2px solid;' +
+                                    'border-bottom: #F3F3F3 2px solid;' +
+                                    'border-top: 0px' +
+                                    'border-radius: 3px;' +
+                                    'z-index: 1;'
+            var tempHtml = ''
+            tempHtml += '<div style="position: relative; width:100px; height: 30px; top: 15px; left: 75px; background-color: #d5e2f8; font-size: 16px; text-align: center; line-height: 30px; color: #398bfa">Options</div>' +
+                        '<hr style="position: relative; top: 18px; background-color: #d2d6e0; height: 1px; border: none">'
+
+            tempHtml += '<div style="position: relative; width:100px; height: 30px; top: 20px; background-color: #d5e2f8; font-size: 13px; text-align: center; line-height: 30px; color: #398bfa">Drone model</div>' +
+                           '<hr style="position: relative; top: 12px; background-color: #d2d6e0; height: 2px; border: none">'
+
+            tempHtml += '<form id="type" style="position: relative; left: 20px; top: 15px">' +
+                        '<input type="radio" name="type" value="101" style="margin-left: 0px; margin-right: 8px; margin-top: 8px" checked="true">Type 101' +
+                        '<input type="radio" name="type" value="102" style="margin-left: 30px; margin-right: 8px; margin-top: 8px">Type 102<br>' +
+                        '<input type="radio" name="type" value="103" style="margin-left: 0px; margin-right: 8px; margin-top: 8px">Type 103' +
+                        '<input type="radio" name="type" value="104" style="margin-left: 27px; margin-right: 8px; margin-top: 8px">Type 104' +
+                        '</form>'
+
+            tempHtml += '<div style="position: relative; width:100px; height: 30px; top: 15px; background-color: #d5e2f8; font-size: 13px; text-align: center; line-height: 30px; color: #398bfa">Drone number</div>' +
+                           '<hr style="position: relative; top: 7px; background-color: #d2d6e0; height: 2px; border: none">'
+
+            tempHtml += '<form id="num" style="position: relative; left: 20px; top: 10px">' +
+                        '<input type="radio" name="num" value="1" style="margin-left: 0px; margin-right: 8px; margin-top: 8px;" checked="true">1' +
+                        '<input type="radio" name="num" value="2" style="margin-left: 20px; margin-right: 8px; margin-top: 8px">2' +
+                        '<input type="radio" name="num" value="3" style="margin-left: 20px; margin-right: 8px; margin-top: 8px">3' +
+                        '<input type="radio" name="num" value="4" style="margin-left: 20px; margin-right: 8px; margin-top: 8px">4' +
+                        '</form>'
+
+
+            tempDiv2.innerHTML = tempHtml
+            document.body.appendChild(tempDiv2)
+
+            function route(num, type) {
+                truckRoute = []
+                uavRoute1 = []
+                uavRoute2 = []
+                uavRoute3 = []
+                uavRoute4 = []
+
+                console.log(num)
+                console.log(type)
+
+                if(num == 1) {
+                    if(type == 101) {
+                        truckRouteID = [0, 18, 12, 7, 10, 19, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+                        uavRouteID1 = [0, 4, 18, 17, 12, 19, 14, 3, 23, 11, 16, 9, 22, 1, 24, 15, 2, 5, 13, 21, 6, 20, 25]
+                    }
+                    else if(type == 102) {
+                        truckRouteID = [0, 17, 18, 19, 3, 11, 9, 16, 24, 2, 5, 21, 8, 6, 4, 0]
+                        uavRouteID1 = [0, 25, 17, 14, 18, 7, 19, 10, 3, 12, 11, 23, 9, 16, 22, 24, 1, 5, 15, 21, 13, 6, 20, 4]
+                    }
+                    else if(type == 103) {
+                        truckRouteID = [0, 4, 20, 6, 8, 1, 15, 5, 2, 21, 24, 22, 16, 9, 11, 19, 3, 10, 17, 0]
+                        uavRouteID1 = [4, 25, 8, 1, 13, 15, 11, 14, 19, 23, 3, 7, 20, 12, 17, 18, 0]
+                    }
+                    else if(type == 104) {
+                        truckRouteID = [0, 4, 20, 6, 8, 1, 15, 5, 2, 21, 24, 22, 16, 9, 11, 19, 3, 10, 17, 0]
+                        uavRouteID1 = [4, 25, 8, 1, 13, 15, 11, 23, 19, 14, 3, 7, 10, 12, 17, 18, 0]
+                    }
+                    for(var i = 0;i < truckRouteID.length; i++) {
+                        truckRoute.push(point[truckRouteID[i]])
+                    }
+                    for(var i = 0;i < uavRouteID1.length; i++) {
+                        uavRoute1.push(point[uavRouteID1[i]])
+                    }
+
+                    // 绘制卡车路线
+                    var truckCurve = new BMap.Polyline(truckRoute, {strokeColor:"#dc2f91",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(truckCurve); //添加到地图中
+
+                    // 绘制无人机路线1
+                    var uavCurve1 = new BMap.Polyline(uavRoute1, {strokeColor:"#00b3ff",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(uavCurve1); //添加到地图中
+                }
+                else if(num == 2) {
+                    if(type == 101) {
+                        truckRouteID = [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+                        uavRouteID1 = [0, 4, 17, 7, 10, 19, 3, 14, 11, 16, 9, 24, 5, 15, 21]
+                        uavRouteID2 = [0, 18, 17, 12, 10, 3, 23, 11, 22, 1, 24, 5, 13, 21, 6, 20, 25]
+                    }
+                    else if(type == 102) {
+                        truckRouteID = [0, 18, 3, 11, 16, 24, 21, 8, 6, 4, 0]
+                        uavRouteID1 = [0, 17, 18, 10, 3, 7, 11, 14, 16, 22, 24, 2, 21, 13, 8, 6, 20, 4]
+                        uavRouteID2 = [0, 9, 18, 19, 3, 12, 11, 23, 16, 1, 24, 5, 21, 15, 8, 6, 25, 26]
+                    }
+                    else if(type == 103) {
+                        truckRouteID = [0, 18, 3, 11, 9, 24, 2, 5, 21, 8, 6, 4, 0]
+                        uavRouteID1 = [0, 17, 18, 7, 3, 10, 11, 14, 9, 16, 2, 5, 13, 21, 1, 6, 20, 0]
+                        uavRouteID2 = [18, 12, 3, 19, 11, 23, 9, 22, 2, 5, 15, 21, 6, 25, 0]
+                    }
+                    else if(type == 104) {
+                        truckRouteID = [0, 4, 6, 8, 1, 5, 2, 21, 24, 22, 16, 9, 11, 3, 19, 17, 0]
+                        uavRouteID1 = [4, 20, 1, 13, 5, 11, 23, 3, 10, 19, 7, 0]
+                        uavRouteID2 = [4, 25, 1, 15, 2, 11, 14, 3, 19, 12, 17, 18, 0]
+                    }
+                    for(var i = 0;i < truckRouteID.length; i++) {
+                        truckRoute.push(point[truckRouteID[i]])
+                    }
+                    for(var i = 0;i < uavRouteID1.length; i++) {
+                        uavRoute1.push(point[uavRouteID1[i]])
+                    }
+                    for(var i = 0;i < uavRouteID2.length; i++) {
+                        uavRoute2.push(point[uavRouteID2[i]])
+                    }
+
+                    // 绘制卡车路线
+                    var truckCurve = new BMap.Polyline(truckRoute, {strokeColor:"#dc2f91",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(truckCurve); //添加到地图中
+
+                    // 绘制无人机路线1
+                    var uavCurve1 = new BMap.Polyline(uavRoute1, {strokeColor:"#00b3ff",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    var uavCurve2 = new BMap.Polyline(uavRoute2, {strokeColor:"#d46b1c",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(uavCurve1); //添加到地图中
+                    map.addOverlay(uavCurve2)
+                }
+                else if(num == 3) {
+                    if(type == 101) {
+                        truckRouteID = [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+                        uavRouteID1 = [0, 4, 17, 7, 10, 19, 3, 14, 11, 16, 9, 24, 5, 15, 21]
+                        uavRouteID2 = [17, 12, 10, 3, 23, 11, 22, 1, 24, 5, 13, 21, 6, 20, 25]
+                        uavRouteID3 = [17, 18, 10]
+                    }
+                    else if(type == 102) {
+                        truckRouteID = [0, 3, 11, 16, 24, 21, 8, 0]
+                        uavRouteID1 = [0, 17, 3, 7, 11, 14, 16, 9, 24, 2, 21, 4, 8, 20, 0]
+                        uavRouteID2 = [0, 18, 3, 10, 11, 23, 16, 24, 5, 21, 13, 8, 25, 0]
+                        uavRouteID3 = [0, 19, 3, 12, 11, 22, 16, 24, 15, 21, 1, 8, 6, 0]
+                    }
+                    else if(type == 103) {
+                        truckRouteID = [0, 18, 3, 11, 9, 24, 2, 5, 21, 8, 6, 0]
+                        uavRouteID1 = [0, 17, 18, 7, 3, 19, 11, 14, 9, 16, 24, 5, 13, 21, 1, 6, 20, 0]
+                        uavRouteID2 = [18, 12, 3, 11, 23, 9, 22, 24, 5, 15, 21, 6, 25, 0]
+                        uavRouteID3 = [18, 10, 3, 6, 4, 0]
+                    }
+                    else if(type == 104) {
+                        truckRouteID = [0, 18, 3, 11, 16, 24, 2, 5, 21, 8, 6, 0]
+                        uavRouteID1 = [0, 17, 18, 7, 3, 14, 11, 16, 9, 5, 15, 6, 4, 0]
+                        uavRouteID2 = [18, 10, 3, 23, 11, 16, 22, 2, 21, 1, 6, 25, 0]
+                        uavRouteID3 = [18, 12, 3, 19, 11, 21, 13, 6, 20, 0]
+                    }
+                    for(var i = 0;i < truckRouteID.length; i++) {
+                        truckRoute.push(point[truckRouteID[i]])
+                    }
+                    for(var i = 0;i < uavRouteID1.length; i++) {
+                        uavRoute1.push(point[uavRouteID1[i]])
+                    }
+                    for(var i = 0;i < uavRouteID2.length; i++) {
+                        uavRoute2.push(point[uavRouteID2[i]])
+                    }
+                    for(var i = 0;i < uavRouteID3.length; i++) {
+                        uavRoute3.push(point[uavRouteID3[i]])
+                    }
+
+                    // 绘制卡车路线
+                    var truckCurve = new BMap.Polyline(truckRoute, {strokeColor:"#dc2f91",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(truckCurve); //添加到地图中
+
+                    // 绘制无人机路线1
+                    var uavCurve1 = new BMap.Polyline(uavRoute1, {strokeColor:"#00b3ff",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    var uavCurve2 = new BMap.Polyline(uavRoute2, {strokeColor:"#d46b1c",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    var uavCurve3 = new BMap.Polyline(uavRoute3, {strokeColor:"#837cbb",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(uavCurve1); //添加到地图中
+                    map.addOverlay(uavCurve2);
+                    map.addOverlay(uavCurve3);
+                }
+                else if(num == 4) {
+                    if(type == 101) {
+                        truckRouteID = [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+                        uavRouteID1 = [0, 4, 17, 7, 10, 19, 3, 14, 11, 16, 9, 24, 5, 15, 21]
+                        uavRouteID2 = [17, 12, 10, 3, 23, 11, 22, 1, 24, 5, 13, 21, 6, 20, 25]
+                        uavRouteID3 = [17, 18, 10]
+                        uavRouteID4 = []
+                    }
+                    else if(type == 102) {
+                        truckRouteID = [0, 3, 11, 24, 21, 8, 0]
+                        uavRouteID1 = [0, 17, 3, 7, 11, 14, 24, 2, 21, 13, 8, 20, 0]
+                        uavRouteID2 = [0, 18, 3, 10, 11, 23, 24, 5, 21, 9, 8, 25, 0]
+                        uavRouteID3 = [3, 12, 11, 22, 24, 15, 21, 16, 8, 6, 0]
+                        uavRouteID4 = [3, 19, 11, 24, 1, 8, 4, 0]
+                    }
+                    else if(type == 103) {
+                        truckRouteID = [0, 18, 3, 11, 9, 24, 2, 5, 21, 8, 6, 0]
+                        uavRouteID1 = [0, 17, 18, 7, 3, 19, 11, 14, 9, 16, 24, 5, 13, 21, 1, 6, 20, 0]
+                        uavRouteID2 = [18, 12, 3, 11, 23, 9, 22, 24, 5, 15, 21, 6, 25, 0]
+                        uavRouteID3 = [18, 10, 3, 6, 4, 0]
+                        uavRouteID4 = []
+                    }
+                    else if(type == 104) {
+                        truckRouteID = [0, 3, 11, 16, 24, 21, 8, 6, 4, 0]
+                        uavRouteID1 = [0, 14, 3, 23, 11, 16, 9, 21, 1, 6, 25, 0]
+                        uavRouteID2 = [0, 7, 3, 12, 24, 2, 6, 4, 17, 0]
+                        uavRouteID3 = [0, 19, 11, 16, 22, 24, 5, 21, 15, 4, 18, 0]
+                        uavRouteID4 = [0, 10, 11, 21, 13, 6, 20, 0]
+                    }
+                    for(var i = 0;i < truckRouteID.length; i++) {
+                        truckRoute.push(point[truckRouteID[i]])
+                    }
+                    for(var i = 0;i < uavRouteID1.length; i++) {
+                        uavRoute1.push(point[uavRouteID1[i]])
+                    }
+                    for(var i = 0;i < uavRouteID2.length; i++) {
+                        uavRoute2.push(point[uavRouteID2[i]])
+                    }
+                    for(var i = 0;i < uavRouteID3.length; i++) {
+                        uavRoute3.push(point[uavRouteID3[i]])
+                    }
+                    for(var i = 0;i < uavRouteID4.length; i++) {
+                        uavRoute4.push(point[uavRouteID4[i]])
+                    }
+
+                    // 绘制卡车路线
+                    var truckCurve = new BMap.Polyline(truckRoute, {strokeColor:"#dc2f91",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(truckCurve); //添加到地图中
+
+
+                    // 绘制无人机路线1
+                    var uavCurve1 = new BMap.Polyline(uavRoute1, {strokeColor:"#00b3ff",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    var uavCurve2 = new BMap.Polyline(uavRoute2, {strokeColor:"#d46b1c",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    var uavCurve3 = new BMap.Polyline(uavRoute3, {strokeColor:"#837cbb",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    var uavCurve4 = new BMap.Polyline(uavRoute4, {strokeColor:"#3da88b",strokeWeight:5, strokeOpacity:1}); //创建直线对象
+                    map.addOverlay(uavCurve1); //添加到地图中
+                    map.addOverlay(uavCurve2);
+                    map.addOverlay(uavCurve3);
+                    map.addOverlay(uavCurve4);
+                }
+            }
+
+            $("input[name=type]").click(function () {
+                map.clearOverlays()
+                var type = $(this).val()
+                var num = $("input[name=num]:checked").val()
+                route(num, type)
+            });
+
+            $("input[name=num]").click(function () {
+                map.clearOverlays()
+                var type = $("input[name=type]:checked").val()
+                var num = $(this).val()
+                route(num, type)
+            })
+
+
+            $("input[value=101]").click()
+
+        }
+    }
+
+
+
+</script>
